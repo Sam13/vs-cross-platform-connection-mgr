@@ -31,11 +31,13 @@ namespace CrossPlatformConnectionMgr
 					Console.WriteLine("Invalid command line");
 					return (int) Result.InvalidCommandLine;
 				}
-
+				
 				var host = args[1];
 				var port = int.Parse(args[2]);
 				var user = args[3];
 				var password = args[4];
+
+				Console.WriteLine($"Adding credentials for {host}");
 
 				var cis = new ConnectionInfoStore();
 				var passwordSecure = new SecureString();
@@ -45,7 +47,10 @@ namespace CrossPlatformConnectionMgr
 				}
 
 				cis.Add(new PasswordConnectionInfo(host, port, TimeSpan.MaxValue, user, passwordSecure));
+				
+				Console.WriteLine($"Saving credentials");
 				cis.Save();
+				Console.WriteLine($"Credentials saved successfully");
 
 				return (int) Result.Success;
 			}
